@@ -1,6 +1,6 @@
 {
-  "name": "cloudark-tools",
-  "version": "0.0.5",
+  "name": "cloudoll",
+  "version": "0.0.1",
   "description": "cloudark [my projects]  share tools",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.coding.net:cloudbeer/cloudark-tools.git"
+    "url": "https://code.aliyun.com/cloudark/cloudoll.git"
   },
   "keywords": [
     "koa"
