@@ -1,0 +1,1 @@
+module.exports.KoaMiddlwares = require('./lib/koa-middlewares');
