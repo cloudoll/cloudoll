@@ -1,6 +1,6 @@
 {
   "name": "cloudoll",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "cloudark [my projects]  share tools",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cloudeer": "^0.1.2",
-    "clouderr": "^0.0.6"
+    "clouderr": "^0.1.0"
   }
 }
