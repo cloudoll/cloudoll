@@ -1,7 +1,7 @@
 {
   "name": "cloudoll",
   "version": "0.0.8",
-  "description": "cloudark [my projects]  share tools",
+  "description": "cloudark share tools",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,12 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cloudeer": "^0.1.4",
-    "clouderr": "^0.1.0"
+    "clouderr": "^0.1.2",
+    "koa": "^1.2.0",
+    "koa-bodyparser": "^2.2.0",
+    "koa-router": "^5.4.0",
+    "request": "^2.72.0",
+    "tracer": "^0.8.3",
+    "z-schema": "^3.17.0"
   }
 }

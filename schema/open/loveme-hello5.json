@@ -1,0 +1,14 @@
+{
+  "title": "Order",
+  "type": "object",
+  "properties": {
+    "goods_id": {
+      "description": "商品id",
+      "maxLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "goods_id", "goods_name","amount","sell_price","original_price","sku_name","sku_code","sku_value_name","sku_value"
+  ]
+}

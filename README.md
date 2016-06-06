@@ -12,8 +12,68 @@ cloudark 生态圈中的共享工具
 npm i cloudoll --save
 ```
 
+程序开始的时候请指定下面的环境变量：
 
-## koa 的拦截器
+```
+process.env.appName = "Shopcart";
+process.env.debug   = true;
+```
+
+## 错误封装
+
+```
+var Clouderr = require('cloudoll').Clouderr;
+var errors =  require('cloudoll').errors;
+```
+
+
+## koa 拦截器
+
+如下的代码示例，各个拦截器位置参考。
+
+```
+var KoaMiddle = require('cloudoll').KoaMiddle;
+var koaMiddle = new KoaMiddle();
+
+app.use(koaMiddle.errorsHandleAhead);
+
+app.use(koaMiddle.jsonValidator().schemaValidator);
+
+app.use(koaMiddle.autoRouters().routes());
+
+app.use(koaMiddle.errorsHandleBehind);
+
+```
+
+
+
+** koa 错误拦截器 **
+
+统一了错误，现在所有的错误类型都是 Clouderr 了
+
+用法：
+
+```
+
+app.use(koaMiddle.errorsHandleAhead);
+
+//其他代码
+
+app.use(koaMiddle.errorsHandleBehind);
+
+```
+
+** JSON schema validator **
+
+仅当 POST 的时候有效
+
+```
+app.use(koaMiddle.jsonValidator().schemaValidator);
+```
+
+
+
+** koa 的权限拦截器 **
 
 ```
 var KoaMiddleWares = require('cloudoll').KoaMiddleWares;
@@ -21,9 +81,6 @@ var koaMiddlewares = new KoaMiddleWares('myService');
 
 ```
 
-### 权限验证
-
-使用方法：
 
 ```
 app.use(koaMiddlewares.checkRights);
@@ -94,5 +151,3 @@ router.post("/cloudeer", function *(next) {
   this.body = yield cloudeer.invokeCo(httpMethod, form.service, form.api_method, form.data);
 });
 ```
-
-# 我已经狂晕了。。。。
