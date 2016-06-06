@@ -18,6 +18,8 @@ app.use(koaMiddle.errorsHandleAhead);
 
 app.use(koaMiddle.jsonValidator().schemaValidator);
 
+app.use(koaMiddle.queryStringParser);
+
 app.use(koaMiddle.autoRouters().routes());
 
 app.use(koaMiddle.errorsHandleBehind);

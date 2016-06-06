@@ -18,6 +18,8 @@
   "dependencies": {
     "cloudeer": "^0.1.4",
     "clouderr": "^0.1.2",
+    "co": "^4.6.0",
+    "ezway2mongo": "0.0.8",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",

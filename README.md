@@ -39,15 +39,23 @@ app.use(koaMiddle.errorsHandleAhead);
 
 app.use(koaMiddle.jsonValidator().schemaValidator);
 
+app.use(koaMiddle.queryStringParser);
+
 app.use(koaMiddle.autoRouters().routes());
 
 app.use(koaMiddle.errorsHandleBehind);
 
 ```
 
+#### querystring 解析器
 
+这个解析器将 querystring 弄成json 并且放入 this.qs 中。
 
-** koa 错误拦截器 **
+```
+app.use(koaMiddle.queryStringParser);
+```
+
+#### koa 错误拦截器
 
 统一了错误，现在所有的错误类型都是 Clouderr 了
 
