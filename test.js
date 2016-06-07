@@ -1,5 +1,9 @@
 var KoaApp = require('./').KoaApplication;
-var app = KoaApp();
+var app    = KoaApp();
+console.log(JSON.stringify(process.env.APP_CONFIG));
+
+
+
 // process.env.appName = "Shopcart";
 // process.env.debug   = true;
 //
