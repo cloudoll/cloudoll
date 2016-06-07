@@ -1,7 +1,31 @@
-var KoaApp = require('./').KoaApplication;
-var app    = KoaApp();
-// console.log(JSON.stringify(process.env.APP_CONFIG));
+var mongo = require('./').orm.mongo;
+var mysql = require('./').orm.mysql;
+var co    = require('co');
 
+mongo.connect("mongodb://mongoadmin:docker_youku@112.74.29.211:27017/order");
+mysql.connect({
+  //mysql host 在我的 fedora 23 里面的 docker 里。
+  connectionLimit: 10,
+  host           : '10.211.55.15',
+  user           : 'root',
+  password       : 'zhwell',
+  database       : 'cloudarling'
+});
+
+setTimeout(function () {
+  co(function *() {
+    var res = yield mongo.find('order');
+    console.log(res);
+
+    var res2 = yield mysql.loadById("account", 56);
+    console.log(res2);
+  });
+}, 1000);
+
+
+// var KoaApp = require('./').KoaApplication;
+// var app    = KoaApp();
+// console.log(JSON.stringify(process.env.APP_CONFIG));
 
 
 // process.env.appName = "Shopcart";

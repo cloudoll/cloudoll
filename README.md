@@ -34,6 +34,7 @@ var app = KoaApplication();
 ```
 module.exports = {
   debug   : true,
+  port: 8909,
   cloudeer: {
     serviceHost: "http://112.74.29.211:8801",
     myHost     : 'localhost',
@@ -46,8 +47,110 @@ module.exports = {
 };
 ```
 
+## 数据库访问
+
+### mongo
+
+```
+var mongo = require('cloudoll').orm.mongo;
+
+//这个方法只需在应用启动的时候调用一次
+mongo.connect('mongodb://localhost:27017/test');
+
+var result = yield ezmongo.find('collectionName', {a:1}, {skip:20, limit:20});
+
+```
+
+支持如下 API
+
+find
+
+count
+
+findOne
+
+exists
+
+insert
+
+findOneAndUpdate
+
+updateById
+
+save
+
+deleteOne
+
+delete
+
+sum
 
 
+### mysql
+
+```
+var mysql = require('cloudoll').orm.mysql;
+
+//只需调用一次
+mysql.connect({
+             connectionLimit: 10,
+             host           : '10.163.11.23',
+             user           : 'xxx',
+             password       : 'xxx',
+             database       : 'xxx'
+           });
+
+mysql.debug = true;
+
+var rest = yield db.load("tablename", {
+             where : "id=?",
+             cols  : ["id", "nick", "email"],
+             params: [1]
+           });
+```
+
+API 列表
+
+query
+
+输入参数： sql, params
+
+```
+ezway2mysql.query('select * from table where id>?', [1]);
+```
+
+list
+
+参数： table, conditions {cols:[...], limit:1, skip:0, where:'', params:[...], orderBy: ''}
+
+
+insert
+
+参数：table, model
+
+update (仅支持主键为 id 自增的表)
+
+参数：table, model
+
+updateBatch
+
+load
+
+count
+
+sum
+
+conditions 里增加 col 参数，这个是需要统计的值
+
+loadByKV
+
+输入 table, key, value
+
+loadById
+
+输入 table, id
+
+寻找列 id 的值是 id 的对象。
 
 
 ## 错误封装

@@ -8,3 +8,7 @@ module.exports.mongo = {
   BaseService   : require('./lib/koas/mongo/BaseService'),
   BaseController: require('./lib/koas/mongo/BaseController')
 };
+module.exports.orm   = {
+  mongo: require('./lib/orm/mongo'),
+  mysql: require('./lib/orm/mysql')
+};
