@@ -26,6 +26,60 @@ var Clouderr = require('cloudoll').Clouderr;
 var errors =  require('cloudoll').errors;
 ```
 
+## Cloudeer 客户端工具
+
+这个是cloudeer 的消费端工具
+
+全示例如下：
+
+```
+
+var Cloudeer = require('cloudoll').Cloudeer;
+
+var cloudeer = new Cloudeer({
+  cloudeerUri: 'http://localhost:8801',
+  myHost     : 'localhost',
+  myPort     : '8088'
+});
+
+//这是一个服务进程，每隔一段时间从注册中心下载服务器列表
+cloudeer.downloadService();
+
+//这是一个服务进程，每隔一段时间将自己提交到注册中心
+cloudeer.registerService();
+
+//这是一个方法，提交方法列表到注册中心
+cloudeer.registerMethods([
+  {url: "/summary", name: '统计', method: "GET"},
+  {url: "/pay-way", name: '支付方法', method: "GET", open: true},
+  {url: "/pay-way/delete", name: '支付方法删除', method: "POST"},
+  {url: "/pay-ways", name: '支付方法列表', method: "GET"},
+  {url: "/cash-order", name: '订单编辑', method: "POST"},
+  {url: "/cash-orders", name: '订单列表', method: "GET"},
+  {url: "/cash-order/collect", name: '收款', method: "POST"},
+  {url: "/cash-order/delete", name: '删订单', method: "POST"}
+]);
+
+```
+
+## KOA 的 mongo 通用方法基类
+
+### BaseController
+
+```
+var BaseController = require('cloudoll').mongo.BaseController;
+
+var myController = BaseController.create({table: 'myCollection'});
+```
+
+### BaseService
+
+```
+var BaseController = require('cloudoll').mongo.BaseController;
+
+var myService=new BaseService('myCollection');
+```
+
 
 ## koa 拦截器
 
@@ -65,13 +119,13 @@ app.use(koaMiddle.queryStringParser);
 
 app.use(koaMiddle.errorsHandleAhead);
 
-//其他代码
+//use routers
 
 app.use(koaMiddle.errorsHandleBehind);
 
 ```
 
-** JSON schema validator **
+#### JSON schema validator
 
 仅当 POST 的时候有效
 
@@ -80,6 +134,9 @@ app.use(koaMiddle.jsonValidator().schemaValidator);
 ```
 
 
+
+
+# 以下内容尚未实现，稍等。。。。
 
 ** koa 的权限拦截器 **
 
