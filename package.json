@@ -1,6 +1,6 @@
 {
   "name": "cloudoll",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "cloudark share tools",
   "main": "index.js",
   "scripts": {

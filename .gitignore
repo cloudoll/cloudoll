@@ -32,3 +32,4 @@ node_modules
 api
 schema
 test.js
+config
