@@ -2,10 +2,6 @@
 
 cloudark 生态圈中的共享工具
 
-依赖的微服务：
-
-1. cloudarling
-
 安装：
 
 ```
@@ -18,6 +14,41 @@ npm i cloudoll --save
 process.env.appName = "Shopcart";
 process.env.debug   = true;
 ```
+
+## 快速启动
+
+快速创建一个 koa 应用程序
+
+```
+//默认为 development，将自动加载 ./config/develepment.js 配置文件
+process.env.NODE_ENV = 'development';
+
+var KoaApplication = require('cloudoll').KoaApplication;
+
+//这是一个标准的 koa app
+var app = KoaApplication();
+```
+
+上面的程序已经自动应用了必要的中间键。 配置文件 [./config/develpment.js] 如下：
+
+```
+module.exports = {
+  debug   : true,
+  cloudeer: {
+    serviceHost: "http://112.74.29.211:8801",
+    myHost     : 'localhost',
+    myPort     : 3000
+  },
+  app: {
+    controllerDirs: ['/api/open'],
+    schemaPath: './schema'
+  }
+};
+```
+
+
+
+
 
 ## 错误封装
 
