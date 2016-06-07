@@ -1,6 +1,6 @@
 var KoaApp = require('./').KoaApplication;
 var app    = KoaApp();
-console.log(JSON.stringify(process.env.APP_CONFIG));
+// console.log(JSON.stringify(process.env.APP_CONFIG));
 
 
 
