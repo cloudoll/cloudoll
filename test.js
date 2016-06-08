@@ -25,7 +25,24 @@
 
 var KoaApp = require('./').KoaApplication;
 var app    = KoaApp();
-console.log(JSON.stringify(process.env));
+//console.log(JSON.stringify(process.env));
+
+var router = app.router;
+var cloudeer = app.cloudeer;
+
+
+// router.get('/', function *() {
+//   console.log("----------------", this.app.cloudeer);
+//   this.body = "dddd";
+// });
+
+
+// setTimeout(function () {
+//
+//   console.log(require('./').Cloudeer.authUris);
+// }, 100);
+// console.log(router.stack);
+
 
 
 // process.env.appName = "Shopcart";

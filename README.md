@@ -27,9 +27,14 @@ var KoaApplication = require('cloudoll').KoaApplication;
 
 //这是一个标准的 koa app
 var app = KoaApplication();
+
+//这是一个 koa-router 路由，可以继续添加路由。
+var router = app.router;
 ```
 
 上面的程序已经自动应用了必要的中间键。 配置文件 [./config/develpment.js] 如下：
+
+并且 string 的节点自动放入了 process.env 里面了
 
 ```
 module.exports = {
@@ -40,12 +45,20 @@ module.exports = {
     myHost     : 'localhost',
     myPort     : 3000
   },
-  app: {
-    controllerDirs: ['/api/open'],
-    schemaPath: './schema'
-  }
+  controllerDirs: ['/api/open'],
+  schemaPath: './schema'
 };
 ```
+
+KoaApplication 添加的可以访问的属性：
+
+app.router
+
+app.cloudeer
+
+在路由中，可以使用 this.app 找到当前的 koa 应用。
+
+
 
 ## 数据库访问
 
@@ -229,6 +242,8 @@ app.use(koaMiddle.jsonValidator().schemaValidator);
 
 app.use(koaMiddle.queryStringParser);
 
+app.use(koaMiddle.authenticate);
+
 app.use(koaMiddle.autoRouters().routes());
 
 app.use(koaMiddle.errorsHandleBehind);
@@ -270,21 +285,16 @@ app.use(koaMiddle.jsonValidator().schemaValidator);
 
 
 
-# 以下内容尚未实现，稍等。。。。
 
 ** koa 的权限拦截器 **
 
 ```
-var KoaMiddleWares = require('cloudoll').KoaMiddleWares;
-var koaMiddlewares = new KoaMiddleWares('myService');
+app.use(koaMiddle.authenticate);
 
 ```
 
 
-```
-app.use(koaMiddlewares.checkRights);
-```
-
+# 以下内容尚未实现，稍等。。。。
 
 ### MySQL 的全库操作
 
