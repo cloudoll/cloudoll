@@ -173,6 +173,19 @@ var Clouderr = require('cloudoll').Clouderr;
 var errors =  require('cloudoll').errors;
 ```
 
+系统会自动加载默认错误。
+
+自定义错误默认位于根目录的 ./errors.js
+
+或者在配置文件里定义，如果指定了配置文件，则不加载 根目录的 errors.js：
+
+```
+myErrorsPath: './my-errors.js'
+```
+
+如果需要自定义错误信息，可以使用 errors.load() 加载。
+
+
 ## Cloudeer 客户端工具
 
 这个是cloudeer 的消费端工具
@@ -209,6 +222,15 @@ cloudeer.registerMethods([
 
 ```
 
+### 客户端调用工具
+
+cloudeer.invoke
+
+cloudeer.invokeCo
+
+会抛出例外或者返回正确的数据。
+
+
 ## KOA 的 mongo 通用方法基类
 
 ### BaseController
@@ -222,9 +244,9 @@ var myController = BaseController.create({table: 'myCollection'});
 ### BaseService
 
 ```
-var BaseController = require('cloudoll').mongo.BaseController;
+var BaseService = require('cloudoll').mongo.BaseService;
 
-var myService=new BaseService('myCollection');
+var myService = new BaseService('myCollection');
 ```
 
 

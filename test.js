@@ -30,7 +30,9 @@ var app    = KoaApp();
 var router = app.router;
 var cloudeer = app.cloudeer;
 
+// console.log(require('./').errors.MYAPP_CUSTOM('ddddd'));
 
+// console.log(process.env);
 // router.get('/', function *() {
 //   console.log("----------------", this.app.cloudeer);
 //   this.body = "dddd";
