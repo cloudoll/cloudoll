@@ -25,8 +25,6 @@
 
 var KoaApp = require('./').KoaApplication;
 var app    = KoaApp();
-//console.log(JSON.stringify(process.env));
-
 var router = app.router;
 var cloudeer = app.cloudeer;
 
