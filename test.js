@@ -29,18 +29,18 @@ var router = app.router;
 var cloudeer = app.cloudeer;
 var Cloudeer = require('./').Cloudeer;
 
-setTimeout(function () {
-
-  console.log('cloudeer:', cloudeer);
-  console.log('config:', Cloudeer.config);
-  
-  cloudeer.invoke("POST", "cloudarling", '/v2/login', {
-    passport: '13006699866',
-    password: 'xxj19857@'
-  }, function (err, res) {
-    console.log(err, res);
-  });
-}, 10000);
+// setTimeout(function () {
+//
+//   console.log('cloudeer:', cloudeer);
+//   console.log('config:', Cloudeer.config);
+//
+//   cloudeer.invoke("POST", "cloudarling", '/v2/login', {
+//     passport: '11',
+//     password: ''
+//   }, function (err, res) {
+//     console.log(err, res);
+//   });
+// }, 10000);
 // console.log(router.stack);
 
 
