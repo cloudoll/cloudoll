@@ -38,15 +38,27 @@ var router = app.router;
 
 ```
 module.exports = {
-  debug   : true,
-  port: 8909,
-  cloudeer: {
-    serviceHost: "http://112.74.29.211:8801",
-    myHost     : 'localhost',
-    myPort     : 3000
+  debug                : true,
+  app_name             : "cloudoll",
+  my_host              : "localhost",
+  my_ip                : '127.0.0.1',
+  cloudeer_url         : "http://112.74.29.211:8801",
+  port                 : 3000,
+  controller_dirs      : ['/api/open', '/api/admin', '/api/inner'],
+  schema_path          : './schema',
+  my_errors_path       : './my-errors.js',
+  koa_middles_forbidden: {
+    clouderr_handle: true,
+    auto_router    : true,
+    json_validator : true,
+    authenticate   : true
   },
-  controllerDirs: ['/api/open'],
-  schemaPath: './schema'
+  cloudeer             : {
+    server             : "http://112.74.29.211:8801",
+    not_a_consumer     : true,
+    not_a_service      : true,
+    no_methods_register: true
+  }
 };
 ```
 
@@ -58,6 +70,7 @@ app.cloudeer
 
 在路由中，可以使用 this.app 找到当前的 koa 应用。
 
+可以通过修改配置文件禁止那些不要的功能（请注意：这部分相关的配置节点为 false 的时候是启动的）。
 
 
 ## 数据库访问
