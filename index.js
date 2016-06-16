@@ -7,7 +7,8 @@ module.exports.Cloudeer = require('./lib/rpc/Cloudeer');
 
 module.exports.mongo = {
   BaseService: require('./lib/koas/mongo/BaseService'),
-  BaseController: require('./lib/koas/mongo/BaseController')
+  BaseController: require('./lib/koas/mongo/BaseController'),
+  ObjectID    : require("mongodb").ObjectID
 };
 
 module.exports.orm   = {
