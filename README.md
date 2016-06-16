@@ -77,8 +77,9 @@ KoaApplication 支持options 参数：
 middles: [xxx, yyyy] (表示需要提前加载的中间件)
 
 ```
-new KoaApplication({
-    middles:[static.serve('./staticFiles')]
+var serve = require('koa-static');
+var app   = new cloudoll.KoaApplication({
+  middles: serve('./publish')
 });
 ```
 
