@@ -10,7 +10,7 @@ module.exports.mongo = {
   BaseController: require('./lib/koas/mongo/BaseController'),
   ObjectID    : require("mongodb").ObjectID
 };
-
+module.exports.logger= require('tracer').colorConsole();
 module.exports.orm   = {
   mongo   : require('./lib/orm/mongo'),
   mysql   : require('./lib/orm/mysql'),
