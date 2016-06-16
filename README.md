@@ -83,6 +83,15 @@ var app   = new cloudoll.KoaApplication({
 });
 ```
 
+KoaApplication 自动添加了 cloudeer 的代理
+
+暴露了 三个接口:
+
+```
+POST /cloudeer
+POST /cloudeer/get
+POST /cloudeer/post
+```
 
 
 ## 数据库访问
