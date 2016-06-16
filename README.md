@@ -72,6 +72,17 @@ app.cloudeer
 
 可以通过修改配置文件禁止那些不要的功能（请注意：这部分相关的配置节点为 false 的时候是启动的）。
 
+KoaApplication 支持options 参数：
+
+middles: [xxx, yyyy] (表示需要提前加载的中间件)
+
+```
+new KoaApplication({
+    middles:[static.serve('./staticFiles')]
+});
+```
+
+
 
 ## 数据库访问
 
