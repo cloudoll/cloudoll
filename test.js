@@ -23,20 +23,19 @@
 // }, 1000);
 
 
-var KoaApp = require('./').KoaApplication;
-var app    = KoaApp();
-var router = app.router;
-var cloudeer = app.cloudeer;
-var Cloudeer = require('./').Cloudeer;
+var KoaApp   = require('./').KoaApplication;
+var app      = KoaApp();
+// var router   = app.router;
+// var cloudeer = app.cloudeer;
+// var Cloudeer = require('./').Cloudeer;
 
 // setTimeout(function () {
 //
 //   console.log('cloudeer:', cloudeer);
 //   console.log('config:', Cloudeer.config);
 //
-//   cloudeer.invoke("POST", "cloudarling", '/v2/login', {
-//     passport: '11',
-//     password: ''
+//   cloudeer.invoke("POST", "mall.service.goods", '/goods/reduce-stock', {
+//     '575fbcdad97d10fb1d5b74d1': 15
 //   }, function (err, res) {
 //     console.log(err, res);
 //   });
@@ -58,7 +57,6 @@ var Cloudeer = require('./').Cloudeer;
 //   console.log(require('./').Cloudeer.authUris);
 // }, 100);
 // console.log(router.stack);
-
 
 
 // process.env.appName = "Shopcart";
