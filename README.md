@@ -93,6 +93,14 @@ POST /cloudeer/get
 POST /cloudeer/post
 ```
 
+增加了几个方法：
+
+* this.echo(data)
+
+* this.getCloudeer*(service, url, params)
+
+* this.postCloudeer*(service, url, params)
+
 
 ## 数据库访问
 
