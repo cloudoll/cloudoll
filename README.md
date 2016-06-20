@@ -1,6 +1,12 @@
 # cloudoll
 
-cloudark 生态圈中的共享工具
+cloudark 群组的共享工具，协助快速集成到分布式的微服务中去
+
+具体详情文档，请到这个项目:
+
+https://code.aliyun.com/cloudark/cloudoc
+
+------------
 
 安装：
 
@@ -74,7 +80,7 @@ app.cloudeer
 
 KoaApplication 支持options 参数：
 
-middles: [xxx, yyyy] (表示需要提前加载的中间件)
+middles: [ xxx, yyyy ] (表示需要提前加载的中间件)
 
 ```
 var serve = require('koa-static');
@@ -92,6 +98,14 @@ POST /cloudeer
 POST /cloudeer/get
 POST /cloudeer/post
 ```
+
+给 koa 的 app.context 增加了几个方法：
+
+* echo(data)
+
+* *getCloudeer(service, url, params)
+
+* *postCloudeer(service, url, params)
 
 
 ## 数据库访问
