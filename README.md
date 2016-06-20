@@ -21,6 +21,13 @@ process.env.appName = "Shopcart";
 process.env.debug   = true;
 ```
 
+
+下面的文档嫑看哦，但我也舍不得删，因为还没拷贝完。
+
+文档到这里看：
+
+# https://code.aliyun.com/cloudark/cloudoc
+
 ## 快速启动
 
 快速创建一个 koa 应用程序
