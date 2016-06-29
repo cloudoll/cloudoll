@@ -1,6 +1,6 @@
 {
   "name": "cloudoll",
-  "version": "0.1.53",
+  "version": "0.1.55",
   "description": "cloudark share tools",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
     "mongodb": "^2.1.21",
-    "mysql": "^2.11.0",
+    "mysql": "^2.11.1",
     "pg": "^5.1.0",
     "tracer": "^0.8.3",
     "z-schema": "^3.17.0"
