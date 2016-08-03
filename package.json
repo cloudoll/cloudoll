@@ -10,17 +10,15 @@
     "type": "git",
     "url": "https://code.aliyun.com/cloudark/cloudoll.git"
   },
-  "keywords": [
-    "koa"
-  ],
+  "keywords": [],
   "author": "Cloudbeer <cloudbeer@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
     "co": "^4.6.0",
-    "koa": "^1.2.0",
+    "koa": "^1.2.1",
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
-    "mongodb": "^2.1.21",
+    "mongodb": "^2.2.5",
     "mysql": "^2.11.1",
     "pg": "^5.1.0",
     "tracer": "^0.8.3",
