@@ -16,5 +16,5 @@ module.exports.orm    = {
   mysql   : require('./lib/orm/mysql'),
   postgres: require('./lib/orm/postgres'),
   redis   : require('./lib/orm/redis'),
-  ObjectId: require("mongodb").ObjectId
+  ObjectID: require("mongodb").ObjectID
 };
