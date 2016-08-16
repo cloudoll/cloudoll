@@ -14,5 +14,6 @@ module.exports.logger= require('tracer').colorConsole();
 module.exports.orm   = {
   mongo   : require('./lib/orm/mongo'),
   mysql   : require('./lib/orm/mysql'),
-  postgres: require('./lib/orm/postgres')
+  postgres: require('./lib/orm/postgres'),
+  redis:require('./lib/orm/redis')
 };
