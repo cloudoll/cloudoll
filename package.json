@@ -18,7 +18,7 @@
     "koa": "^1.2.1",
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
-    "mongodb": "^2.2.5",
+    "mongodb": "^2.2.6",
     "mysql": "^2.11.1",
     "pg": "^5.1.0",
     "redis": "^2.6.2",
@@ -26,6 +26,6 @@
     "z-schema": "^3.17.0"
   },
   "devDependencies": {
-    "mocha": "^3.0.1"
+    "mocha": "^3.0.2"
   }
 }
