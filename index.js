@@ -29,5 +29,6 @@ module.exports.libs = {
   mysql  : require('mysql'),
   pg     : require('pg'),
   redis  : require('redis'),
-  tracer : require('tracer')
+  tracer : require('tracer'),
+  request: require('request')
 };
