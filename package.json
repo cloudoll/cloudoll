@@ -15,7 +15,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "co": "^4.6.0",
-    "koa": "^1.2.2",
+    "koa": "^1.2.4",
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
     "mongodb": "^2.2.9",
