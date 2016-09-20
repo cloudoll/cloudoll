@@ -25,6 +25,24 @@
 
 var KoaApp   = require('./').KoaApplication;
 var app      = KoaApp();
+
+let os = require('os');
+
+const startUsage = process.cpuUsage();
+setInterval(function () {
+  console.log(os.loadavg());
+  // console.log(os.uptime());
+  // console.log(os.freemem());
+  // console.log(os.totalmem());
+  // console.log(os.userInfo());
+  // console.log(os.endianness());
+  console.log(process.memoryUsage());
+  console.log(process.cpuUsage(startUsage));
+
+}, 5000);
+
+
+
 // var router   = app.router;
 // var cloudeer = app.cloudeer;
 // var Cloudeer = require('./').Cloudeer;
