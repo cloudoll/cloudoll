@@ -74,17 +74,15 @@ http://localhost:3000/open/hello/world
 
 
 
-### 2. 运行 cloudeer。 
+### 2. 运行注册服务 cloudoll-server-rest。 
 
- **这部分可以使用 cloudeer-server 项目，相应的配置文件更换成 tcp**
+ **这部分可以使用 cloudoll-server 项目，相应的配置文件更换成 tcp**
  
 从 git 上 下载源码：
 
 ```
-git clone https://code.aliyun.com/cloudark/cloudeer.git
+git clone https://github.com/cloudoll/cloudoll-server-rest
 ```
-
-如果 https 不好使，使用 http 。
 
 进入到目录，进行 node 前戏工作 。
 
@@ -120,6 +118,7 @@ node index.js
 ```javascript
 module.exports = {
   app_name      : "hello_world",
+  my_host       : "127.0.0.1",
   debug         : true,
   port          : 3000,
   cloudeer      :{
@@ -127,14 +126,15 @@ module.exports = {
     host    : '127.0.0.1',
     port    : 8801
   },
-  my_host       : "127.0.0.1"
 };
 ```
 
 其中 cloudeer 节点的配置会将这个应用变成分布式的微服务。
 
+my_host 可以不用指定，他会寻找当前机器的内网地址。
 
-重启一下咯。
+
+现在重启一下咯。
 
 现在访问注册中心看看：
 
@@ -144,12 +144,15 @@ http://localhost:8801/view
 
 http://localhost:8801/methods
 
+这个时候注册中心应该列出了微服务实例和方法的列表。
+
 
 好像很简单呀！
 
 万里长征才走完第一步。
 
 如果感兴趣请继续。
+
 
 ### 4. 创建另一个微服务（wow）并调用 hello_world 微服务
 
@@ -160,7 +163,8 @@ http://localhost:8801/methods
 修改配置文件： /config/development.js：
 
 将 app_name 改成另一个， 现在改成 wow， 这样他才会变成另一个微服务。
-修改端口 port 为另一个。（之前的自动化端口在 pm2 运维的时候会出错，所以取消。）
+
+修改端口 port 为另一个。（之前的自动化端口在 pm2 运维的时候会失效，所以取消。）
 
 修改 /api/open/hello.js
 
@@ -189,9 +193,9 @@ Koa Application 启动成功！端口： 3002
 
 ### 5. 分布部署 hello_world
 
-进入 hello_world 项目。
+多次拷贝 hello_world 项目，更换 app_name 和 port 的值。
 
-多几次执行：
+然后分别执行：
 
 ```
 node index.js
