@@ -26,9 +26,9 @@
 var KoaApp   = require('./').KoaApplication;
 var app      = KoaApp();
 
-let os = require('os');
-
-const startUsage = process.cpuUsage();
+// let os = require('os');
+//
+// const startUsage = process.cpuUsage();
 // setInterval(function () {
 //   console.log(os.loadavg());
 //   // console.log(os.uptime());
