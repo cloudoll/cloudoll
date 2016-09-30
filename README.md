@@ -88,7 +88,7 @@ http://localhost:3000/open/hello/world
 
 ### 2. 运行注册服务 cloudoll-server-rest。 
 
- **这部分可以使用 cloudoll-server 项目，相应的配置文件更换成 tcp**
+ **这部分可以使用 cloudoll-server 项目，相应的配置文件的节点更换成 tcp**
  
 从 git 上 下载源码：
 
