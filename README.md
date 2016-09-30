@@ -176,7 +176,7 @@ http://localhost:8801/methods
 
 将 app_name 改成另一个， 现在改成 wow， 这样他才会变成另一个微服务。
 
-修改端口 port 为另一个。（之前的自动化端口在 pm2 运维的时候会失效，所以取消。）
+修改端口 port 为 3002。
 
 修改 /api/open/hello.js
 
@@ -195,17 +195,19 @@ module.exports = {
 node index.js
 ```
 
-看看控制台的输出 http 端口，类似下面的输出，并在浏览器里看看。
+看看控制台的输出 http 端口，类似下面的输出。
 
 ```
 Koa Application 正在启动，尝试端口：3002
 Koa Application 启动成功！端口： 3002
 ```
 
+并在浏览器里看看 http://localhost:3002/open/hello/world
+
 
 ### 5. 分布部署 hello_world
 
-多次拷贝 hello_world 项目，更换 app_name 和 port 的值。
+多次拷贝 hello_world 项目，更换 app_name 和 port 的值。注意 port 不要重复。
 
 然后分别执行：
 
@@ -213,15 +215,16 @@ Koa Application 启动成功！端口： 3002
 node index.js
 ```
 
+<!--
 不要担心端口问题，他会自动寻找合适的端口。**(这个不对了，现在的版本不支持自动更换端口)**
-
+-->
 
 
 ### 6. 证明一下
 
 现在你可以去并发执行 wow 的 /open/hello/world 了。
 
-在浏览器中不断的刷新就可以看到结果。
+在浏览器中不断的刷新 http://localhost:3002/open/hello/world 就可以看到结果。
 
 例子中用端口表示了他是从哪个微服务上访问过来的。
 
