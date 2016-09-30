@@ -1,470 +1,219 @@
-# cloudoll
+# Cloudoll
 
-cloudark 群组的共享工具，协助快速集成到分布式的微服务中去
+这一套工具是为了方便的创建微服务，并且提供了多种方便使用的工具。
 
-具体详情文档，请到这个项目:
+## 目录
 
-https://code.aliyun.com/cloudark/cloudoc
+* [从 0 开始创建微服务](#from0)
 
-------------
+* [更多的链接](#category)
 
-安装：
+* [贡献者](#contributors)
+
+<!--
+
+## 故事背景
+
+从前有一群很懒的程序猿，生活在不为人知的云之暗面。
+
+因为他们很懒，所以不愿意多写一个代码。
+
+因为他们还有点良知，所以又不愿意糊弄，那些高并发啊，分布式啊，都要考虑进来。
+
+他们又造了几个轮子：**cloudark 套件**
+
+在这个轮子上，他们希望不用再写那些写了一辈子的重复代码了，
+
+也不用再去关心程序性能问题了。【好吧，我要保证我不会在函数里写死循环！！】
+
+-->
+
+<a name="from0"/>
+
+## 从 0 开始创建一个微服务
+
+
+### 1. 使用 cloudoll 创建 web 应用
+
+创建一个目录：hello_world, 进去之后输入命令行 npm init。
+
+引入 cloudoll 包
 
 ```
 npm i cloudoll --save
 ```
 
-程序开始的时候请指定下面的环境变量：
+
+创建一个入口文件 /index.js
 
 ```
-process.env.appName = "Shopcart";
-process.env.debug   = true;
+require('cloudoll').KoaApplication();
 ```
 
 
-
-文档到这里看：
-
-# https://code.aliyun.com/cloudark/cloudoc
-
-
-下面的文档嫑看哦，但我也舍不得删，因为还没拷贝完。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-----------
-
-
-
-
-
-
-
-## 快速启动
-
-快速创建一个 koa 应用程序
-
-```
-//默认为 development，将自动加载 ./config/develepment.js 配置文件
-process.env.NODE_ENV = 'development';
-
-var KoaApplication = require('cloudoll').KoaApplication;
-
-//这是一个标准的 koa app
-var app = KoaApplication();
-
-//这是一个 koa-router 路由，可以继续添加路由。
-var router = app.router;
-```
-
-上面的程序已经自动应用了必要的中间键。 配置文件 [./config/develpment.js] 如下：
-
-并且 string 的节点自动放入了 process.env 里面了
+创建文件 /api/open/hello.js
 
 ```
 module.exports = {
-  debug                : true,
-  app_name             : "cloudoll",
-  my_host              : "localhost",
-  my_ip                : '127.0.0.1',
-  cloudeer_url         : "http://112.74.29.211:8801",
-  port                 : 3000,
-  controller_dirs      : ['/api/open', '/api/admin', '/api/inner'],
-  schema_path          : './schema',
-  my_errors_path       : './my-errors.js',
-  koa_middles_forbidden: {
-    clouderr_handle: true,
-    auto_router    : true,
-    json_validator : true,
-    authenticate   : true
+  world: function *() {
+    this.echo("你好世界。form port: " + process.env.port );
+  }
+};
+
+```
+
+现在启动服务：
+
+```
+node index.js
+```
+
+现在访问一下试试
+
+http://localhost:3000/open/hello/world
+
+
+
+### 2. 运行 cloudeer。 
+
+ **这部分可以使用 cloudeer-server 项目，相应的配置文件更换成 tcp**
+ 
+从 git 上 下载源码：
+
+```
+git clone https://code.aliyun.com/cloudark/cloudeer.git
+```
+
+如果 https 不好使，使用 http 。
+
+进入到目录，进行 node 前戏工作 。
+
+```
+npm install
+```
+
+手工创建一个 /data 的目录用来存储数据。
+
+运行：
+
+```
+node index.js
+```
+
+访问 http://localhost:8801/view
+
+无需改动 cloudeer 任何代码。
+
+打完收工!
+
+
+### 3. 分布式的微服务 hello_world
+
+好了，接下来，我们把第一步中写的程序变成可以被分布部署的微服务。
+
+创建一个文件： /config/development.js
+
+注意：在第一步创建的那个项目下哦，嫑搞错位置了。
+
+内容如下：
+
+```javascript
+module.exports = {
+  app_name      : "hello_world",
+  debug         : true,
+  port          : 3000,
+  cloudeer      :{
+    type    : 'rest', //支持 'rest', 'tcp'
+    host    : '127.0.0.1',
+    port    : 8801
   },
-  cloudeer             : {
-    server             : "http://112.74.29.211:8801",
-    not_a_consumer     : true,
-    not_a_service      : true,
-    no_methods_register: true
+  my_host       : "127.0.0.1"
+};
+```
+
+其中 cloudeer 节点的配置会将这个应用变成分布式的微服务。
+
+
+重启一下咯。
+
+现在访问注册中心看看：
+
+http://localhost:8801/view
+
+和
+
+http://localhost:8801/methods
+
+
+好像很简单呀！
+
+万里长征才走完第一步。
+
+如果感兴趣请继续。
+
+### 4. 创建另一个微服务（wow）并调用 hello_world 微服务
+
+现在创建另一个微服务，步骤和前面的 hello_world 一样。
+
+你可以直接拷贝过来。但需要改一些关键的地方。
+
+修改配置文件： /config/development.js：
+
+将 app_name 改成另一个， 现在改成 wow， 这样他才会变成另一个微服务。
+修改端口 port 为另一个。（之前的自动化端口在 pm2 运维的时候会出错，所以取消。）
+
+修改 /api/open/hello.js
+
+```
+module.exports = {
+  world: function *() {
+    var res   = yield this.getCloudeer("hello_world", "/open/hello/world");
+    this.echo("来自远方的问候: " + res);
   }
 };
 ```
 
-KoaApplication 添加的可以访问的属性：
-
-app.router
-
-app.cloudeer
-
-在路由中，可以使用 this.app 找到当前的 koa 应用。
-
-可以通过修改配置文件禁止那些不要的功能（请注意：这部分相关的配置节点为 false 的时候是启动的）。
-
-KoaApplication 支持options 参数：
-
-middles: [ xxx, yyyy ] (表示需要提前加载的中间件)
+启动服务:
 
 ```
-var serve = require('koa-static');
-var app   = new cloudoll.KoaApplication({
-  middles: serve('./publish')
-});
+node index.js
 ```
 
-KoaApplication 自动添加了 cloudeer 的代理
-
-暴露了 三个接口:
+看看控制台的输出 http 端口，类似下面的输出，并在浏览器里看看。
 
 ```
-POST /cloudeer
-POST /cloudeer/get
-POST /cloudeer/post
-```
-
-给 koa 的 app.context 增加了几个方法：
-
-* echo(data)
-
-* *getCloudeer(service, url, params)
-
-* *postCloudeer(service, url, params)
-
-
-## 数据库访问
-
-### mongo
-
-```
-var mongo = require('cloudoll').orm.mongo;
-
-//这个方法只需在应用启动的时候调用一次
-mongo.connect('mongodb://localhost:27017/test');
-
-var result = yield ezmongo.find('collectionName', {a:1}, {skip:20, limit:20});
-
-```
-
-支持如下 API
-
-find
-
-count
-
-findOne
-
-exists
-
-insert
-
-findOneAndUpdate
-
-updateById
-
-save
-
-deleteOne
-
-delete
-
-sum
-
-
-### mysql
-
-```
-var mysql = require('cloudoll').orm.mysql;
-
-//只需调用一次
-mysql.connect({
-             connectionLimit: 10,
-             host           : '10.163.11.23',
-             user           : 'xxx',
-             password       : 'xxx',
-             database       : 'xxx'
-           });
-
-mysql.debug = true;
-
-var rest = yield db.load("tablename", {
-             where : "id=?",
-             cols  : ["id", "nick", "email"],
-             params: [1]
-           });
-```
-
-API 列表
-
-query
-
-输入参数： sql, params
-
-```
-ezway2mysql.query('select * from table where id>?', [1]);
-```
-
-list
-
-参数： table, conditions {cols:[...], limit:1, skip:0, where:'', params:[...], orderBy: ''}
-
-
-insert
-
-参数：table, model
-
-update (仅支持主键为 id 自增的表)
-
-参数：table, model
-
-updateBatch
-
-load
-
-count
-
-sum
-
-conditions 里增加 col 参数，这个是需要统计的值
-
-loadByKV
-
-输入 table, key, value
-
-loadById
-
-输入 table, id
-
-寻找列 id 的值是 id 的对象。
-
-
-## 错误封装
-
-```
-var Clouderr = require('cloudoll').Clouderr;
-var errors =  require('cloudoll').errors;
-```
-
-系统会自动加载默认错误。
-
-自定义错误默认位于根目录的 ./errors.js
-
-或者在配置文件里定义，如果指定了配置文件，则不加载 根目录的 errors.js：
-
-```
-myErrorsPath: './my-errors.js'
-```
-
-如果需要自定义错误信息，可以使用 errors.load() 加载。
-
-
-## Cloudeer 客户端工具
-
-这个是cloudeer 的消费端工具
-
-全示例如下：
-
-```
-
-var Cloudeer = require('cloudoll').Cloudeer;
-
-var cloudeer = new Cloudeer({
-  cloudeerUri: 'http://localhost:8801',
-  myHost     : 'localhost',
-  myPort     : '8088'
-});
-
-//这是一个服务进程，每隔一段时间从注册中心下载服务器列表
-cloudeer.downloadService();
-
-//这是一个服务进程，每隔一段时间将自己提交到注册中心
-cloudeer.registerService();
-
-//这是一个方法，提交方法列表到注册中心
-cloudeer.registerMethods([
-  {url: "/summary", name: '统计', method: "GET"},
-  {url: "/pay-way", name: '支付方法', method: "GET", open: true},
-  {url: "/pay-way/delete", name: '支付方法删除', method: "POST"},
-  {url: "/pay-ways", name: '支付方法列表', method: "GET"},
-  {url: "/cash-order", name: '订单编辑', method: "POST"},
-  {url: "/cash-orders", name: '订单列表', method: "GET"},
-  {url: "/cash-order/collect", name: '收款', method: "POST"},
-  {url: "/cash-order/delete", name: '删订单', method: "POST"}
-]);
-
-```
-
-### 客户端调用工具
-
-cloudeer.invoke
-
-cloudeer.invokeCo
-
-会抛出例外或者返回正确的数据。
-
-
-## KOA 的 mongo 通用方法基类
-
-### BaseController
-
-```
-var BaseController = require('cloudoll').mongo.BaseController;
-
-var myController = BaseController.create({table: 'myCollection'});
-```
-
-### BaseService
-
-```
-var BaseService = require('cloudoll').mongo.BaseService;
-
-var myService = new BaseService('myCollection');
+Koa Application 正在启动，尝试端口：3002
+Koa Application 启动成功！端口： 3002
 ```
 
 
-## koa 拦截器
+### 5. 分布部署 hello_world
 
-如下的代码示例，各个拦截器位置参考。
+进入 hello_world 项目。
 
-```
-var KoaMiddle = require('cloudoll').KoaMiddle;
-var koaMiddle = new KoaMiddle();
-
-app.use(koaMiddle.errorsHandleAhead);
-
-app.use(koaMiddle.jsonValidator().schemaValidator);
-
-app.use(koaMiddle.queryStringParser);
-
-app.use(koaMiddle.authenticate);
-
-app.use(koaMiddle.autoRouters().routes());
-
-app.use(koaMiddle.errorsHandleBehind);
+多几次执行：
 
 ```
-
-#### querystring 解析器
-
-这个解析器将 querystring 弄成json 并且放入 this.qs 中。
-
-```
-app.use(koaMiddle.queryStringParser);
+node index.js
 ```
 
-#### koa 错误拦截器
-
-统一了错误，现在所有的错误类型都是 Clouderr 了
-
-用法：
-
-```
-
-app.use(koaMiddle.errorsHandleAhead);
-
-//use routers
-
-app.use(koaMiddle.errorsHandleBehind);
-
-```
-
-#### JSON schema validator
-
-仅当 POST 的时候有效
-
-```
-app.use(koaMiddle.jsonValidator().schemaValidator);
-```
+不要担心端口问题，他会自动寻找合适的端口。**(这个不对了，现在的版本不支持自动更换端口)**
 
 
 
+### 6. 证明一下
+
+现在你可以去并发执行 wow 的 /open/hello/world 了。
+
+在浏览器中不断的刷新就可以看到结果。
+
+例子中用端口表示了他是从哪个微服务上访问过来的。
 
 
-** koa 的权限拦截器 **
 
-```
-app.use(koaMiddle.authenticate);
+<a name='category' />
 
-```
+# cloudoll has more...
 
+[请访问 cloudoc 项目阅读](https://github.com/cloudoll/cloudoc)
 
-# 以下内容尚未实现，稍等。。。。
-
-### MySQL 的全库操作
-
-使用方法
-
-```
-app.use(koaMiddlewares.ezway2mysql)
-```
-
-下面的代码示例是消费端的页面
-
-```
-    function getCloudeer(service, api_method, data, callback) {
-      $.post('/cloudeer', {
-        service    : service,
-        http_method: 'GET',
-        api_method : api_method,
-        data       : data
-      }, function (res) {
-        if (callback)callback(res);
-      }, 'json');
-    }
-
-    var data = {
-      method    : 'list',
-      table     : 'account',
-      ticket    : $.cookie('ticket'),
-      conditions: {
-        where  : 'id>?',
-        params : [1],
-        cols   : ['id', 'mobile'],
-        limit  : 1000,
-        orderBy: 'id desc'
-      }
-    };
-
-    var base64String = base64.encode(JSON.stringify(data));
-
-    getCloudeer('cloudarling', '/crud', base64String, function (res) {
-      console.log(res);
-    });
-
-```
-
-消费端的服务端
-
-```
-router.post("/cloudeer", function *(next) {
-  var form = this.request.body;
-
-  console.dir(JSON.stringify(require("cloudeer").config));
-  console.log(form);
-
-  if (!form.service) {
-    throw error.WHAT_REQUIRE("service");
-  }
-  if (!form.api_method) {
-    throw error.WHAT_REQUIRE("api_method");
-  }
-
-  var httpMethod = form.http_method || "GET";
-  // var cloudeer = require("cloudeer");
-  this.body = yield cloudeer.invokeCo(httpMethod, form.service, form.api_method, form.data);
-});
-```
