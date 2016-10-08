@@ -27,3 +27,7 @@ body {
     max-width: 100px;
     text-align: center;
 }
+.row a,.row a:hover{
+    text-decoration: none;
+    color:#000;
+}
