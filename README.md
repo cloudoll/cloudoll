@@ -75,6 +75,7 @@ require('cloudoll').KoaApplication();
 
 创建文件 /api/open/hello.js
 
+
 ```
 module.exports = {
   world: function *() {
@@ -204,7 +205,7 @@ module.exports = {
 ```
 
 
-修改 /api/open/hello.js 让消费端能区分是哪个微服务实例提供的服务。
+修改 /api/open/hello.js 输出远程的调用结果。
 
 ```
 module.exports = {
