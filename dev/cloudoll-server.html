@@ -1,0 +1,117 @@
+ {% extends "layout/index.html" %}
+{% block body %}
+    <div class="bs-docs-header" id="content">
+        <div class="container">
+            <h1>cloudoll-server</h1>
+            <p>注册中心，管理所有的微服务，并能在web端实现实时监控和报警。</p>
+        </div>
+    </div>
+    <div class="container bs-docs-container">
+        <div class="row">
+            <div class="col-md-9" role="main">
+                <div class="bs-docs-section">
+                    <h1 class="page-header" id="o-1">Cloudeer 注册中心 socket 版本</h1>
+                    <p>有如下特性：</p>
+                    <p>使用 socket 长连接连接注册中心，这是服务端，客户端将在 cloudoll 中实现。</p>
+                    <p>加入认证</p>
+                    <p>优化 pm2 的部署，当 pm2 为 cluster 模式时，允许注册多个一样的服务地址。这样也会增加 cluster 模式下的访问机会。</p>
+                    <p>如果微服务注册了 notAConsumer, 那么，标记了 notAConsumer 的 socket 将不能获取服务列表。</p>
+                    <h3 id="o-2">客户端发起的请求</h3>
+                    <p>登录</p>
+                    <pre class="prettyprint">
+    {
+        "cmd": "login", 
+        "data": {
+            "username": "test1", 
+            "password": "test"
+        }
+    }</pre>
+                    <p>注册微服务</p>
+                    <pre class="prettyprint">
+    {
+        "cmd": "reg-service", 
+        "data": {
+            "appName": "cloudoll", 
+            "host": "127.0.0.1", 
+            "port": 3009, 
+            "baseUri": "",
+            "notAConsumer": true
+        }
+    }</pre>
+                    <h3 id="o-3">注册中心的响应消息</h3>
+                    <p>登录成功后响应</p>
+                    <pre class="prettyprint">
+    {
+        "errno": 0, 
+        "cmd": "login",
+        "data": {"sid" : 0}
+    }</pre>
+                    <p>错误的响应</p>
+                    <pre class="prettyprint">
+    {
+        "errno": 403, 
+        "errText": "登录失败，拒绝连接。", 
+        "cmd": "login"
+    }</pre>
+                    <p>服务器向客户端通知微服务列表。</p>
+                    <p>当微服务实例发生变化的时候，注册中心会依次通知</p>
+                    <pre class="prettyprint">
+    {
+        "errno": 0, 
+        "cmd": "get-services", 
+        "data": {
+            "cloudoll": {
+                "hosts": [
+                    {
+                        "host": "127.0.0.1", 
+                        "port": 3009, 
+                        "baseUri": ""
+                    }, 
+                    {
+                        "host": "127.0.0.1", 
+                        "port": 3009, 
+                        "baseUri": ""
+                    }, 
+                    {
+                        "host": "127.0.0.1", 
+                        "port": 3009, 
+                        "baseUri": ""
+                    }
+                ]
+            }
+        }
+    }</pre>
+                    <h3 id="o-4">注册中心询问服务器和微服务实例性能</h3>
+                    <h3 id="o-5">增加服务器用户名和密码</h3>
+                    <p>请使用 add-user.js</p>
+                    <p>用法</p>
+                    <pre class="prettyprint">
+Usage: add-user [options]
+
+  Options:
+
+    -h, --help               output usage information
+    -V, --version            output the version number
+    -u, --username           用户名（必填）
+    -p, --password           密码（必填）
+
+  Examples:
+
+    $ node add-user -u knock -p password                        
+                    </pre>
+                  </div>
+                </div>
+            <div class="col-md-3">
+                <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
+                    <ul class="nav bs-docs-sidenav"> 
+                        <li><a href="#o-1">socket 版本</a></li>
+                        <li><a href="#o-2">发起请求</a></li>
+                        <li><a href="#o-3">响应消息</a></li>
+                        <li><a href="#o-4">询问服务器和实例性能</a></li>
+                        <li><a href="#o-5">增加用户名和密码</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+ {%endblock%}

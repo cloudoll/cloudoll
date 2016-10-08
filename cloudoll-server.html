@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cloudoll - 云时代的微服务玩具。">
+    <meta name="keywords" content="">
+    <meta name="author" content="Cloudbeer, Chuchur, Lin,黄兴,zhanxp">
+    <title>Cloudoll 云时代的微服务玩具!</title>
+
+    <!-- Cloudoll core CSS -->
+    <link href="res/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="res/css/patch.css" rel="stylesheet">
+
+    <!-- Documentation extras -->
+    <link href="res/css/docs.min.css" rel="stylesheet">
+    <script src="res/js/run_prettify.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/favicon.ico">
+    <script>
+        var _hmt = _hmt || [];
+    </script>
+</head>
+
+<body class="bs-docs-home">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <!-- Docs master nav -->
+    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a href="/" class="navbar-brand">Cloudoll</a>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="start.html" target="_blank">入手</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/cloudoll/cloudoc" target="_blank">相关文档</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/cloudoll" target="_blank">下载</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/cloudoll">社区</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://github.com/cloudoll">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="bs-docs-header" id="content">
+        <div class="container">
+            <h1>cloudoll-server</h1>
+            <p>注册中心，管理所有的微服务，并能在web端实现实时监控和报警。</p>
+        </div>
+    </div>
+    <div class="container bs-docs-container">
+        <div class="row">
+            <div class="col-md-9" role="main">
+                <div class="bs-docs-section">
+                    <h1 class="page-header" id="o-1">Cloudeer 注册中心 socket 版本</h1>
+                    <p>有如下特性：</p>
+                    <p>使用 socket 长连接连接注册中心，这是服务端，客户端将在 cloudoll 中实现。</p>
+                    <p>加入认证</p>
+                    <p>优化 pm2 的部署，当 pm2 为 cluster 模式时，允许注册多个一样的服务地址。这样也会增加 cluster 模式下的访问机会。</p>
+                    <p>如果微服务注册了 notAConsumer, 那么，标记了 notAConsumer 的 socket 将不能获取服务列表。</p>
+                    <h3 id="o-2">客户端发起的请求</h3>
+                    <p>登录</p>
+                    <pre class="prettyprint">
+    {
+        "cmd": "login", 
+        "data": {
+            "username": "test1", 
+            "password": "test"
+        }
+    }</pre>
+                    <p>注册微服务</p>
+                    <pre class="prettyprint">
+    {
+        "cmd": "reg-service", 
+        "data": {
+            "appName": "cloudoll", 
+            "host": "127.0.0.1", 
+            "port": 3009, 
+            "baseUri": "",
+            "notAConsumer": true
+        }
+    }</pre>
+                    <h3 id="o-3">注册中心的响应消息</h3>
+                    <p>登录成功后响应</p>
+                    <pre class="prettyprint">
+    {
+        "errno": 0, 
+        "cmd": "login",
+        "data": {"sid" : 0}
+    }</pre>
+                    <p>错误的响应</p>
+                    <pre class="prettyprint">
+    {
+        "errno": 403, 
+        "errText": "登录失败，拒绝连接。", 
+        "cmd": "login"
+    }</pre>
+                    <p>服务器向客户端通知微服务列表。</p>
+                    <p>当微服务实例发生变化的时候，注册中心会依次通知</p>
+                    <pre class="prettyprint">
+    {
+        "errno": 0, 
+        "cmd": "get-services", 
+        "data": {
+            "cloudoll": {
+                "hosts": [
+                    {
+                        "host": "127.0.0.1", 
+                        "port": 3009, 
+                        "baseUri": ""
+                    }, 
+                    {
+                        "host": "127.0.0.1", 
+                        "port": 3009, 
+                        "baseUri": ""
+                    }, 
+                    {
+                        "host": "127.0.0.1", 
+                        "port": 3009, 
+                        "baseUri": ""
+                    }
+                ]
+            }
+        }
+    }</pre>
+                    <h3 id="o-4">注册中心询问服务器和微服务实例性能</h3>
+                    <h3 id="o-5">增加服务器用户名和密码</h3>
+                    <p>请使用 add-user.js</p>
+                    <p>用法</p>
+                    <pre class="prettyprint">
+Usage: add-user [options]
+
+  Options:
+
+    -h, --help               output usage information
+    -V, --version            output the version number
+    -u, --username           用户名（必填）
+    -p, --password           密码（必填）
+
+  Examples:
+
+    $ node add-user -u knock -p password                        
+                    </pre>
+                  </div>
+                </div>
+            <div class="col-md-3">
+                <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
+                    <ul class="nav bs-docs-sidenav"> 
+                        <li><a href="#o-1">socket 版本</a></li>
+                        <li><a href="#o-2">发起请求</a></li>
+                        <li><a href="#o-3">响应消息</a></li>
+                        <li><a href="#o-4">询问服务器和实例性能</a></li>
+                        <li><a href="#o-5">增加用户名和密码</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
+    <!-- Footer
+================================================== -->
+    <footer class="bs-docs-footer" role="contentinfo">
+        <div class="container">
+            <p>Copyright © 2016 Cloudoll.com </p>
+        </div>
+    </footer>
+
+    <!-- Cloudoll core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://v3.bootcss.com/assets/js/docs.min.js"></script>
+</body>
+</html>
