@@ -1,6 +1,6 @@
 {
   "name": "cloudoll",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "cloudark share tools",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://code.aliyun.com/cloudark/cloudoll.git"
+    "url": "https://github.com/cloudoll/cloudoll"
   },
   "keywords": [],
   "author": "Cloudbeer <cloudbeer@gmail.com>",
