@@ -18,15 +18,14 @@
     "koa": "^1.2.4",
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
-    "mongodb": "^2.2.9",
+    "mocha": "^3.1.2",
+    "mongodb": "^2.2.10",
     "mysql": "^2.11.1",
-    "pg": "^5.1.0",
+    "pg": "^6.1.0",
     "redis": "^2.6.2",
-    "request": "^2.74.0",
+    "request": "^2.75.0",
     "tracer": "^0.8.3",
-    "z-schema": "^3.17.0"
+    "z-schema": "^3.18.0"
   },
-  "devDependencies": {
-    "mocha": "^3.0.2"
-  }
+  "devDependencies": {}
 }
