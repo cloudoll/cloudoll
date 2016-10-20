@@ -1,0 +1,167 @@
+ {% extends "layout/index.html" %}
+{% block body %}
+    <div class="bs-docs-header" id="content">
+        <div class="container">
+            <h1>cloudoll</h1>
+            <p>cloudoll 是微服务的依赖类库，籍由此项目，可以迅速创建可伸缩的微服务，同时提供了许多现成的工具解决实际项目中的各种问题。</p>
+        </div>
+    </div>
+    <div class="container bs-docs-container">
+        <div class="row">
+            <div class="col-md-9" role="main">
+                <div class="bs-docs-section">
+                    <h1 class="page-header" id="o-1">准备工作</h1>
+                    <pre class="prettyprint">npm i cloudoll --save</pre>
+                    <p>以下是一篇完整使用 cloudoll 编写微服务的入门文章。</p>
+                     <h3 id="o-3">从 0 开始创建一个微服务</h3>
+                     <h3>角色定义</h3>
+                    <p>本文章中一套完整的分布式微服务有如下三种角色：</p>
+                    <p>微服务提供者：hello_word 及其所有的克隆体</p>
+                    <p>微服务的注册中心：cloudeer-server-rest</p>
+                    <p>消费者：wow</p>
+                    <h3>1. 使用 cloudoll 创建 web 应用</h3>
+                    <p>创建一个目录：hello_world，cd 进去之后输入命令行 npm init。</p>
+                    <p>引入 cloudoll 包</p>
+                    <pre class="prettyprint">npm i cloudoll --save</pre>
+                    <p>在项目根目录下创建一个入口文件 /index.js，代码内容如下：</p>
+                    <pre class="prettyprint">require('cloudoll').KoaApplication();</pre>
+                    <p>创建文件 /api/open/hello.js</p> 
+                    <pre class="prettyprint">
+module.exports = {
+  world: function *() {
+    this.echo("你好世界。form port: " + process.env.port );
+  }
+};</pre>
+<p>现在启动服务：</p>
+<pre class="preetyprint">
+    node index.js
+</pre>
+<p>现在访问一下试试</p>
+<p>http://localhost:3000/open/hello/world</p>
+                    <h3 id="o-4">2. 运行注册服务 cloudoll-server-rest</h3>
+                    <p>这部分可以使用 cloudoll-server 项目，相应的配置文件的节点更换成 tcp</p>
+                    <p>从 git 上 下载源码：</p>
+                    <pre class="preetyprint">
+                        git clone https://github.com/cloudoll/cloudoll-server-rest
+                    </pre>
+                    <p>进入到目录，进行 node 前戏工作 。</p>
+                    <pre class="preetyprint">
+                        npm install
+                    </pre>
+                    <p>手工创建一个 /data 的目录用来存储数据。</p>
+                    <p>运行：</p>
+                    <pre class="preetyprint">node index.js</pre>
+                    <p>访问 http://localhost:8801/view</p>
+                    <p>无需改动 cloudeer 任何代码。</p>
+                    <p>打完收工!</p>
+                    <h3 id="o-5">3. 分布式的微服务 hello_world</h3>
+                     <p>好了，接下来，我们把第一步中写的程序变成可以被分布部署的微服务。</p>
+ <p>
+创建一个文件： /config/development.js</p>
+ <p>
+注意：在第一步创建的那个项目下哦，嫑搞错位置了。</p>
+ <p>
+内容如下：</p>
+<pre class="preetyprint">module.exports = {
+  app_name      : "hello_world",
+  my_host       : "127.0.0.1",
+  debug         : true,
+  port          : 3000,
+  cloudeer      :{
+    type    : 'rest', //支持 'rest', 'tcp'
+    host    : '127.0.0.1', //这个是注册中心的地址
+    port    : 8801
+  },
+};</pre><p>
+其中 cloudeer 节点的配置会将这个应用变成分布式的微服务。</p>
+<p>
+my_host 可以不用指定，他会寻找当前机器的内网地址。</p>
+<p>
+现在重启一下咯。</p>
+<p>
+现在访问注册中心看看：</p>
+<p>
+http://localhost:8801/view</p>
+<p>
+和</p>
+<p>
+http://localhost:8801/methods</p>
+<p>
+这个时候注册中心应该列出了微服务实例和方法的列表。</p>
+<p>
+好像很简单呀！</p>
+<p>
+万里长征才走完第一步。</p>
+<p>
+如果感兴趣请继续。</p>
+<h3>4. 创建另一个微服务（wow）并调用 hello_world 微服务</h3><p>
+现在创建另一个微服务，步骤和前面的 hello_world 一样。</p>
+<p>
+你可以直接拷贝过来。但需要改一些关键的地方。</p>
+<p>
+修改配置文件： /config/development.js：</p>
+<p>
+将 app_name 改成另一个， 现在改成 wow， 这样他才会变成另一个微服务。</p>
+<p>
+修改端口 port 为 3002。</p>
+<pre class="preetyprint">
+    module.exports = {
+  app_name      : "hello_world",
+  my_host       : "127.0.0.1",
+  debug         : true,
+  port          : 3002,
+  cloudeer      :{
+    type    : 'rest', //支持 'rest', 'tcp'
+    host    : '127.0.0.1',
+    port    : 8801
+  },
+};
+</pre>
+<p>修改 /api/open/hello.js 输出远程的调用结果。</p>
+<pre class="preetyprint">
+    module.exports = {
+  world: function *() {
+    var res   = yield this.getCloudeer("hello_world", "/open/hello/world");
+    this.echo("来自远方的问候: " + res);
+  }
+};
+</pre>
+<p>启动服务:</p>
+<pre>
+    node index.js
+</pre>
+<p>看看控制台的输出 http 端口，类似下面的输出。</p>
+<pre>Koa Application 正在启动，尝试端口：3002
+Koa Application 启动成功！端口： 3002</pre>
+<p>并在浏览器里看看 http://localhost:3002/open/hello/world</p>
+<h3>5. 分布部署 hello_world</h3><p>
+多次拷贝 hello_world 项目，更换 port 的值。注意 port 不要重复。</p>
+<p>
+如果你有多个机器，可以使用多机部署，但需要调整正确的 ip 地址。</p>
+<p>
+然后分别执行：</p> 
+<pre>
+    node index.js
+</pre>
+<h3>6. 证明一下</h3><p>
+现在你可以去并发执行 wow 的 /open/hello/world 了。</p>
+<p>
+在浏览器中不断的刷新 http://localhost:3002/open/hello/world 就可以看到结果。</p>
+<p>
+例子中用端口表示了他是从哪个微服务上访问过来的。</p>
+                  </div>
+                </div>
+            <div class="col-md-3">
+                <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
+                    <ul class="nav bs-docs-sidenav"> 
+                        <li><a href="#o-1">cloudoll</a></li>
+                        <li><a href="#o-2">从 0 开始创建一个微服务</a></li>
+                        <li><a href="#o-3">响应消息</a></li>
+                        <li><a href="#o-4">询问服务器和实例性能</a></li>
+                        <li><a href="#o-5">增加用户名和密码</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+ {%endblock%}
