@@ -1,5 +1,6 @@
 var loveme     = {
   hello : function *() {
+    console.log(this.qs);
     this.body = "hello world.";
   },
   hello1: function *() {
