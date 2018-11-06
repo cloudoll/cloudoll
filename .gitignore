@@ -29,7 +29,8 @@ node_modules
 .idea
 
 # 项目测试文件
-api
-schema
+api/
+schema/
 test.js
-config
+test1.js
+config/
