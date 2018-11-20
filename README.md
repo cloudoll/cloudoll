@@ -1,5 +1,7 @@
 # cloudoll
 
+cloudoll is a web framework for building microservices rapidly.
+
 cloudoll 是微服务的依赖类库，籍由此项目，可以迅速创建可伸缩的微服务，
 
 cloudoll 同时提供了许多现成的工具解决实际项目中的各种问题。
