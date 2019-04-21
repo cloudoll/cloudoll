@@ -28,6 +28,8 @@ node_modules
 
 .idea
 
+trash/
+
 # 项目测试文件
 api/
 schema/

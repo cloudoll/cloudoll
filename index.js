@@ -1,4 +1,5 @@
-module.exports.KoaApplication = require('./lib/core/EveApplication');
+module.exports.KoaApplication = require('./lib/core/WebApplication');
+module.exports.WebApplication = require('./lib/core/WebApplication');
 
 
 // module.exports.Clouderr       = require('./lib/errors/Clouderr');
