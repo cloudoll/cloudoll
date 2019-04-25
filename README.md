@@ -298,7 +298,7 @@ viewloader: {
 配置实例如下：
 
 ```js
-viewloaderconfig = {
+viewloader = {
   cache: true,
   excludes:['/api'],
   policies: [
