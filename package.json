@@ -1,7 +1,7 @@
 {
   "name": "cloudoll",
   "version": "1.0.0",
-  "description": "cloudark share tools",
+  "description": "cloudoll is a web framework for building microservices.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,5 +27,7 @@
     "tracer": "^0.9.4",
     "z-schema": "^3.24.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nunjucks": "^3.1.4"
+  }
 }

@@ -1,5 +1,7 @@
 # cloudoll
 
+cloudoll is a web framework for building microservices rapidly.
+
 cloudoll 是微服务的依赖类库，籍由此项目，可以迅速创建可伸缩的微服务，
 
 cloudoll 同时提供了许多现成的工具解决实际项目中的各种问题。
@@ -266,4 +268,128 @@ node index.js
 # cloudoll has more...
 
 [请访问 cloudoc 项目阅读](https://github.com/cloudoll/cloudoc)
+
+
+
+
+
+----
+# viewloader 页面资源加载器
+
+这个插件的目的是为了将页面资源部署到远方。并且可以方便代理到本地。
+
+
+
+## 启用插件 
+
+在文件 plugin.js 里增加
+
+```
+viewloader: {
+  enable: true,
+  package:"eve-viewloader"
+}
+```
+
+## 配置插件
+
+在 config.${env}.js 里增加 viewloader 节点
+
+配置实例如下：
+
+```js
+viewloader = {
+  cache: true,
+  excludes:['/api'],
+  policies: [
+    {
+      route: /^\/lcp\/(.*)$/,
+      remote: "http://g.alicdn.com/cn/wuliuyun-lcp-frontend/$REFRESH_KEY/$1",
+      handle: function (ctx, result, config) {
+        if (result.type == "text/css") {
+          return `.aa{padding: 0} ${result.content}`;
+        } else if (result.type == "text/html") {
+          return `<h1>这里是标题</h1> ${result.content}`;
+        }
+        return result.content;
+      },
+      refreshKey: {
+        type: "diamond",
+        dataId: 'cn-prize.viewloader.cache.version',
+        group: 'eve',
+      }
+    },
+    {
+      route: "/abc",
+      remote: "http://g.alicdn.com/evil-genius/pigeon-docs/0.0.7/tpl/atom-one-dark.css",
+      handle: function (ctx, result, config) {
+        return `.body{padding:0}${result.content}`;
+      }
+    },
+    {
+      route: /^\/local\/(.*)$/,
+      remote: "/Users/xiezhengwei/Documents/MyMD/$1",
+      cache: false
+    }
+  ]
+}
+```
+
+
+
+## 配置指南
+
+### cache 
+
+是否启用缓存（内存缓存），开启后，仅第一次会从远程地址下载内容。
+
+### excludes
+
+- 可以排除掉某些路径，让这些路径不经过 viewloader 插件。
+- excludes 规则是左匹配的。
+- excludes 规则大于下面的 policies 规则， excludes 满足之后，将不再执行 policies 规则。
+
+
+### policies 
+
+路由匹配策略， 可配置多条，从先到后，执行匹配到的第一个规则。
+
+#### route, remote
+
+- route 是本地路由地址（或其匹配规则），remote 是远程地址。
+- route 可以为一个确定的字符串，也可以是一个正则表达式， remote 是一个字符串。
+- 当 route 为字符串的时候，会直接下载 remote 的地址内容。
+- 当 route 为正则表达式，则会在 `yourBaseUrl.replace(route, remote)` 之后下载远程内容。
+- 你还可以指定 remote 为一个本地路径，这样他可以是一个静态文件服务器。
+
+
+#### refreshKey 
+
+你可以指定一个配置项，用于从远程 diamond 获取一个配置值，当此值改变的时候，会刷新缓存。
+
+这个值可以用 `$REFRESH_KEY` 表示在 remote 的路径中。
+
+
+> 警告：当你的远程目标中含有大文件的时候，建议不要使用此插件，
+> 本地路径或禁止缓存比较好。
+
+#### cache
+
+策略项中的 cache 配置将会覆盖全局的 cache。
+
+#### handle
+
+handle 是一个函数，用于再次加工远程的下载的内容，插件会传出三个参数。
+
+```
+function (ctx, result, config)
+```
+
+- ctx: 就是 web 的 context，可以拿到当前项目的上下文
+- result：传出的内容，是一个json 对象，由下面的参数组成：
+  * type: 远程地址访问 response 出来的 content-type 
+  * content: 远程地址的内容 
+  * route: 本地的实际路由 
+  * remote: 实际的远程地址
+- config: 当前路由策略节点
 
