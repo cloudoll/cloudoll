@@ -15,19 +15,17 @@
   "license": "Apache-2.0",
   "dependencies": {
     "co": "^4.6.0",
-    "koa": "^2.6.2",
+    "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "mocha": "^5.2.0",
-    "mongodb": "^3.1.9",
-    "mysql": "^2.16.0",
-    "pg": "^7.6.1",
+    "mocha": "^6.1.4",
+    "mongodb": "^3.2.3",
+    "mysql": "^2.17.1",
+    "pg": "^7.10.0",
     "redis": "^2.8.0",
     "request": "^2.88.0",
-    "tracer": "^0.9.4",
-    "z-schema": "^3.24.1"
-  },
-  "devDependencies": {
-    "nunjucks": "^3.1.4"
+    "tracer": "^0.9.8",
+    "z-schema": "^4.0.2",
+    "nunjucks": "^3.2.0"
   }
 }
