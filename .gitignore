@@ -27,6 +27,7 @@ build/Release
 node_modules
 
 .idea
+.vs
 
 trash/
 
