@@ -2,24 +2,6 @@
 
 
 
-## QuickStart
-
-```bash
-$ npm install cloudoll
-$ npm test
-```
-
-publish your framework to npm, then change app's dependencies:
-
-```js
-// {app_root}/index.js
-require('cloudoll').startCluster({
-  baseDir: __dirname,
-  // port: 7001, // default to 7001
-});
-
-```
-
 ## jsonp 插件配置
 
 配置白名单， 不在白名单内的，无法通过 jsonp 获取资源
@@ -47,7 +29,7 @@ throw errors.CUSTOM("这是一个自定义错误。");
 
 WebStorm 等 IDE 会反射出 errors 中的方法。vscode 目前不会，请从下面的拷贝。
 
-## 这个包的默认错误
+### 这个包的默认错误
 
 ```
 module.exports = {
@@ -108,5 +90,24 @@ module.exports = {
 
 
 
+## mysql orm
+
+mysql 执行的快捷方式。
+
+请首先安装 mysql，并在 app.js 中初始化。
+
+```js
+class AppBootHook {
+  constructor(app) {
+    this.app = app;
+  }
+  configWillLoad() {
+    const mysql = doll.orm.mysql;
+    mysql.mysql = require('mysql');
+    mysql.debug = this.app.config.debug;
+    mysql.connect(this.app.config.mysql);
+  }
+}
+```
 
  
