@@ -1,21 +1,34 @@
 # cloudoll
 
+## Quick start
 
+Install
 
-## jsonp 插件配置
+```bash
+npm i cloudoll -S
+```
 
-配置白名单， 不在白名单内的，无法通过 jsonp 获取资源
+Config in package.json
 
-```js
-eveJsonp: {
-  whiteList:[
-    'www.a.com', 'www.b.com'
-  ]
+```json
+{
+  "egg": {
+    "framework": "cloudoll",
+    "port": 3002
+  }
 }
 ```
 
 
+## rpc
 
+有如下的方法调用：
+
+```js  
+await ctx.rpcEve(verb, service, url, params);
+await ctx.getEve(service, url, params);
+await ctx.postEve(service, url, params);
+```
 
 ## eve-errors
 
@@ -110,4 +123,15 @@ class AppBootHook {
 }
 ```
 
- 
+ 链接字符串配置：
+
+ ```js
+//config/config.{env}.js
+module.exports.mysql = {
+    connectionLimit: 10,
+    host: 'xxxx',
+    user: 'xxx',
+    password: 'xx-xxx',
+    database: 'xxxx'
+}
+```
