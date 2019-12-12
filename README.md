@@ -1,4 +1,4 @@
-# cloudoll
+# cloudoll 2.0 based on eggjs
 
 ## Quick start
 
