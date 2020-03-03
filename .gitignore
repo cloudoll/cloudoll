@@ -8,8 +8,8 @@ run/
 *.swp
 package-lock.json
 .github/
-app/public/
-app/service/
-app/controller/
-config/config.*.js
 test/
+.autod.conf.js
+.eslintrc
+.travis.yml
+appveyor.yml
