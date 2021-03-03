@@ -1,9 +1,9 @@
 {
   "name": "cloudoll",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Cloudoll (new version) is a node web framework based on egg",
   "dependencies": {
-    "egg": "^2.29.1",
+    "egg": "^2.29.3",
     "egg-router": "^1.0.1"
   },
   "devDependencies": {
