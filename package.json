@@ -1,18 +1,18 @@
 {
   "name": "cloudoll",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Cloudoll (new version) is a node web framework based on egg",
   "dependencies": {
-    "egg": "^2.29.3",
+    "egg": "^2.30.0",
     "egg-router": "^1.0.1"
   },
   "devDependencies": {
     "autod": "^3.1.1",
     "autod-egg": "^1.1.0",
-    "egg-bin": "^4.15.0",
-    "egg-ci": "^1.18.0",
-    "egg-mock": "^4.0.1",
-    "eslint": "^7.18.0",
+    "egg-bin": "^4.16.4",
+    "egg-ci": "^1.19.0",
+    "egg-mock": "^3.26.0",
+    "eslint": "^7.32.0",
     "eslint-config-egg": "^9.0.0",
     "webstorm-disable-index": "^1.2.0"
   },
