@@ -28,6 +28,7 @@ Config in package.json
 await ctx.rpcEve(verb, service, url, params);
 await ctx.getEve(service, url, params);
 await ctx.postEve(service, url, params);
+await ctx.xurl(service, url, options);  # 这个请参考 urllib 库的 options。
 ```
 
 ## eve-errors
