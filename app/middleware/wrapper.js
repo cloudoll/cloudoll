@@ -7,10 +7,10 @@ module.exports = (options) => {
         可以配置需要匹配的路径 paths，如果不指定，那么就匹配所有的路径。
         */
         let matched;
-        let paths = options.paths || ['/']; //如果不制定路径，则全部 wrapper
+        let paths = options.paths || ['/']; //如果不指定路径，则全部 wrapper
         let parsedUrl = url.parse(ctx.url);
         let pathname = parsedUrl.pathname;
-        for (const i = 0; i < paths.length; i++) {
+        for (let i = 0; i < paths.length; i++) {
             if (pathname.startsWith(paths[i])) {
                 matched = true;
                 break;
@@ -22,7 +22,7 @@ module.exports = (options) => {
             matched = pathname === "/rpc/eve" || pathname === "/rpc/get-eve" || pathname === "/rpc/post-eve";
         }
         if (matched) {
-            const response = new Response({traceId: "12314"});
+            const response = new Response({ traceId: "12314" });
             try {
                 await next();
             } catch (ex) {
